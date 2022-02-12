@@ -5,6 +5,6 @@
       location = "group:Package">
    </FileRef>
    <FileRef
-      location = "group:Pokedex.xcodeproj">
+      location = "group:App/Pokedex.xcodeproj">
    </FileRef>
 </Workspace>
