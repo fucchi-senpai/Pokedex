@@ -43,6 +43,10 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        collectionView.removeFromSuperview()
+    }
+    
     // MARK: Private Functions
     
     private func createBasicListLayout() -> UICollectionViewCompositionalLayout {

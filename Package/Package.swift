@@ -9,11 +9,11 @@ let package = Package(
     products: [
         .library(
             name: "PokedexPackage",
-            targets: ["Views", "Models"]
+            targets: ["Views", "Models", "Network"]
         )
     ],
     dependencies: [
-        .package(name: "Alamofire", url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.4.0"))
+        .package(name: "Alamofire", url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.5.0"))
     ],
     targets: [
         .target(
@@ -22,6 +22,10 @@ let package = Package(
         ),
         .target(
             name: "Models",
+            dependencies: ["Network"]
+        ),
+        .target(
+            name: "Network",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire")
             ]

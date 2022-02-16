@@ -61,5 +61,11 @@ class HomeViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        hStack.removeFromSuperview()
+        label.removeFromSuperview()
+        imageView.removeFromSuperview()
+    }
 
 }

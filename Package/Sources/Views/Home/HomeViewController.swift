@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Models
 
 // MARK: - UIViewController
 public class HomeViewController: UIViewController {
@@ -13,6 +14,16 @@ public class HomeViewController: UIViewController {
     // MARK: Field Property
     
     private lazy var homeView: HomeView = .init(viewController: self)
+    
+    private var model: Response? = nil
+    private var client: PokeAPIProtocol? = nil
+    
+    // MARK: Initializer
+        
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
+        self.client = PokeAPIRepository()
+    }
     
     // MARK: Lify Cycle
     
@@ -23,6 +34,17 @@ public class HomeViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         homeView.collectionView.reloadData()
+        client?.fetch(from: "https://pokeapi.co/api/v2/pokemon?limit=151", success: { (response: Response?) in
+            self.model = response
+            self.homeView.collectionView.reloadData()
+        }, failure: { (error: Error) in
+            let alert = UIAlertController(title: "ネットワークエラー", message: error.localizedDescription, preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel, handler: .none)
+            alert.addAction(action)
+            DispatchQueue.main.async {
+                self.present(alert, animated: false, completion: nil)
+            }
+        })
     }
 
 }
@@ -30,14 +52,14 @@ public class HomeViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return self.model?.results.count ?? 0
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewCell.cellIdentifier, for: indexPath)
         if let cell = cell as? HomeViewCell {
-            cell.label.text = "Number: \(indexPath.row)"
-            cell.imageView.image = UIImage(systemName: "questionmark.circle")
+            cell.label.text = model?.results[indexPath.row].name
+            cell.imageView.image = UIImage(systemName: "person")
         }
         return cell
     }
