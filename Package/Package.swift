@@ -29,6 +29,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire")
             ]
+        ),
+        .testTarget(
+            name: "ModelTests",
+            dependencies: ["Models"]
         )
     ]
 )

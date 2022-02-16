@@ -11,19 +11,19 @@ public struct Response: Codable {
     public let results: [Pokemon]
 }
 
-public struct Pokemon: Codable {
+public struct Pokemon: Codable, Equatable {
     public let name: String
     public let url: String
 }
 
-public struct PokemonInfo: Codable {
+public struct PokemonInfo: Codable, Equatable {
     public let sprites: Sprites
 }
 
-public struct Sprites: Codable {
+public struct Sprites: Codable, Equatable {
     public let frontDefault: String
 
     private enum CodingKeys: String, CodingKey {
-        case frontDefault = "front_detault"
+        case frontDefault = "front_default"
     }
 }
