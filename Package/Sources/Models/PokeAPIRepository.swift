@@ -8,22 +8,30 @@
 import Foundation
 import Network
 
-// MARK: Protocol
-
+// MARK: - PokeAPIProtocol
 public protocol PokeAPIProtocol {
-    func fetch<T>(from url: String, success: @escaping (T?) -> Void, failure: @escaping (Error) -> Void) where T : Decodable
+    func fetch<T>(from url: PokeURLRequestProtocol, success: @escaping (T?) -> Void, failure: @escaping (Error) -> Void) where T : Decodable
 }
 
-// MARK: Implementation
-
+// MARK: - PokeAPIRepository
 public struct PokeAPIRepository: PokeAPIProtocol {
+    
+    // MARK: Initializer
+    
     public init() {}
     
-    public func fetch<T>(from url: String, success: @escaping (T?) -> Void, failure: @escaping (Error) -> Void) where T : Decodable {
-        APIClient.call(url, success: { (data: T?) in
-            success(data)
-        }, failure: { error in
+    // MARK: Methods
+    
+    public func fetch<T>(from url: PokeURLRequestProtocol, success: @escaping (T?) -> Void, failure: @escaping (Error) -> Void) where T : Decodable {
+        do {
+            let urlRequest = try url.urlRequest()
+            APIClient.call(urlRequest, success: { (data: T?) in
+                success(data)
+            }, failure: { error in
+                failure(error)
+            })
+        } catch let error {
             failure(error)
-        })
+        }
     }
 }

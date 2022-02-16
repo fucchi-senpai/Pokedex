@@ -7,6 +7,7 @@
 
 import UIKit
 import Models
+import Network
 
 // MARK: - UIViewController
 public class HomeViewController: UIViewController {
@@ -34,7 +35,7 @@ public class HomeViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         homeView.collectionView.reloadData()
-        client?.fetch(from: "https://pokeapi.co/api/v2/pokemon?limit=151", success: { (response: Response?) in
+        client?.fetch(from: PokeLimitURLRequest(paramValue: "151"), success: { (response: Response?) in
             self.model = response
             self.homeView.collectionView.reloadData()
         }, failure: { (error: Error) in

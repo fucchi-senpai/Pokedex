@@ -18,7 +18,7 @@ let package = Package(
     targets: [
         .target(
             name: "Views",
-            dependencies: ["Models"]
+            dependencies: ["Models", "Network"]
         ),
         .target(
             name: "Models",
@@ -32,7 +32,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ModelTests",
-            dependencies: ["Models"]
+            dependencies: ["Models", "Network"]
         )
     ]
 )

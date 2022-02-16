@@ -9,8 +9,12 @@ import Alamofire
 import Foundation
 
 public struct APIClient {
-    public static func call<T>(_ url: String, success: @escaping (T?) -> Void, failure: @escaping (Error) -> Void) where T : Decodable {
-        request(url).responseDecodable { (response: AFDataResponse<T?>) in
+    
+    // MARK: Methods
+    
+    public static func call<T>(_ urlRequest: URLRequest, success: @escaping (T?) -> Void, failure: @escaping (
+        Error) -> Void) where T : Decodable {
+        request(urlRequest).responseDecodable { (response: AFDataResponse<T?>) in
             switch response.result {
             case .success(let data):
                 success(data)
@@ -20,7 +24,9 @@ public struct APIClient {
         }
     }
     
-    private static func request(_ url: String) -> DataRequest {
-        return AF.request(url).validate(statusCode: 200..<400).validate(contentType: ["application/json"])
+    // MARK: Other Private Methods
+    
+    private static func request(_ urlRequest: URLRequest) -> DataRequest {
+        return AF.request(urlRequest).validate(statusCode: 200..<400).validate(contentType: ["application/json"])
     }
 }
