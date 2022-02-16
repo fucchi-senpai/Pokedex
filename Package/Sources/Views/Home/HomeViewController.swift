@@ -13,23 +13,16 @@ public class HomeViewController: UIViewController {
     // MARK: Field Property
     
     private lazy var homeView: HomeView = .init(viewController: self)
-    // TODO: Implementaion ViewModelProtocol
-    private weak var delegate: HomeViewDelegate?
-    
-    required convenience init() {
-        self.init(nibName: nil, bundle: nil)
-        delegate = self
-    }
     
     // MARK: Lify Cycle
     
     public override func loadView() {
-        delegate?.initView()
+        view = homeView
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        delegate?.reloadData()
+        homeView.collectionView.reloadData()
     }
 
 }
@@ -41,7 +34,12 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewCell.cellIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewCell.cellIdentifier, for: indexPath)
+        if let cell = cell as? HomeViewCell {
+            cell.label.text = "Number: \(indexPath.row)"
+            cell.imageView.image = UIImage(systemName: "questionmark.circle")
+        }
+        return cell
     }
 }
 
@@ -49,18 +47,5 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function)
-    }
-}
-
-// MARK: - HomeViewDelegate
-extension HomeViewController: HomeViewDelegate {
-    public func initView() {
-        view = homeView
-        navigationItem.title = "Pokedex"
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-    public func reloadData() {
-        homeView.collectionView.reloadData()
     }
 }

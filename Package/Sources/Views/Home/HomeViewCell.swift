@@ -21,18 +21,14 @@ class HomeViewCell: UICollectionViewCell {
         return hStack
     }()
     
-    private lazy var label: UILabel = {
+    private (set) lazy var label: UILabel = {
         let label = UILabel(frame: .zero)
-        // TODO: move to ViewModel
-        label.text = "Number"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var imageView: UIImageView = {
+    private (set)  lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        // TODO: move to ViewModel
-        imageView.image = UIImage(systemName: "questionmark.circle")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

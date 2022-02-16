@@ -5,8 +5,6 @@
 //  Created by Shota Fuchikami on 2021/12/06.
 //
 
-import Models
-import SwiftUI
 import UIKit
 import Views
 
@@ -16,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+        window?.rootViewController = NavigationViewController(rootViewController: HomeViewController())
         window?.makeKeyAndVisible()
     }
 

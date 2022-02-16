@@ -12,7 +12,7 @@ class HomeView: UIView {
     
     // MARK: Field Property
     
-    private(set) lazy var collectionView: UICollectionView = {
+    private (set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
         collectionView.register(HomeViewCell.self, forCellWithReuseIdentifier: HomeViewCell.cellIdentifier)
         collectionView.backgroundColor = .systemBackground
@@ -24,13 +24,10 @@ class HomeView: UIView {
         return createBasicListLayout()
     }()
     
-    private var viewController: HomeViewController?
-    
     // MARK: Initializer
     
     init(viewController: HomeViewController) {
         super.init(frame: .zero)
-        self.viewController = viewController
         collectionView.dataSource = viewController
         collectionView.delegate = viewController
         addSubview(collectionView)
